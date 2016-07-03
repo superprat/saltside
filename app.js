@@ -18,7 +18,7 @@ dotenv.load({ path: '.env' });
 /**
  * Controllers (route handlers).
  */
-const apiController = require('./controllers/api');
+const birdController = require('./controllers/bird');
 
 
 /**
@@ -49,10 +49,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /**
  * Primary app routes.
  */
-app.get('/birds', apiController.getBirds);
-app.get('/birds/:id', apiController.getBird);
-app.post('/birds', apiController.postBird);
-app.delete('/birds/:id', apiController.deleteBird)
+app.get('/birds', birdController.getBirds);
+app.get('/birds/:id', birdController.getBird);
+app.post('/birds', birdController.postBird);
+app.delete('/birds/:id', birdController.deleteBird)
 
 
 /**
