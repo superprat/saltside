@@ -1,0 +1,25 @@
+{
+  "name": "saltside",
+  "version": "1.0.0",
+  "description": "Prescreen test for saltside",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "dotenv": "^2.0.0",
+    "errorhandler": "^1.4.3",
+    "express": "^4.14.0",
+    "lodash": "^4.13.1",
+    "mocha": "^2.5.3",
+    "mongoose": "^4.5.3",
+    "morgan": "^1.7.0",
+    "nodemon": "^1.9.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "prateekgupte",
+  "license": "ISC",
+  "private": true
+}
