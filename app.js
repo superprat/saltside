@@ -7,6 +7,7 @@ const compression = require('compression')
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const expressValidator = require('express-validator');
 const bodyParser = require('body-parser');
 
 
@@ -18,7 +19,7 @@ dotenv.load({ path: '.env' });
 /**
  * Controllers (route handlers).
  */
-const birdController = require('./controllers/bird');
+const birdController = require('./controllers/birdController');
 
 
 /**
@@ -44,6 +45,7 @@ app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressValidator());
 
 
 /**

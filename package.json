@@ -9,6 +9,7 @@
     "dotenv": "^2.0.0",
     "errorhandler": "^1.4.3",
     "express": "^4.14.0",
+    "express-validator": "^2.20.8",
     "lodash": "^4.13.1",
     "mocha": "^2.5.3",
     "mongoose": "^4.5.3",

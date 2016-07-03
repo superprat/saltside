@@ -5,8 +5,8 @@ const birdSchema = new mongoose.Schema({
 	name: String,
 	family: String,
 	continents: [String],
-	added: Date,
-	visible: Boolean
+	added: {type:Date, default:Date.now},
+	visible: {type:Boolean , default:false}
 });
 
 
