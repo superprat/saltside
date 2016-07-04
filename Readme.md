@@ -15,7 +15,7 @@ A Basic HTTP Service with JSON API built with Node.js, Express, MongoDB. The ser
 
 ```bash
 # Get the latest snapshot
-git clone https://github.com/superprat/prateekgupte-saltside.git prateekgupte-saltside
+git clone https://github.com/superprat/saltside.git prateekgupte-saltside
 
 # Change directory
 cd prateekgupte-saltside
@@ -25,3 +25,14 @@ npm install
 
 node app.js
 ```
+
+Test Suite
+=======================
+
+
+```bash
+# To execute the unit tests make sure the server is running and then in another shell
+mocha
+
+
+
