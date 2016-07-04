@@ -26,8 +26,7 @@ exports.getBird = (req, res) => {
 
 	Bird.findById(req.params.id, function (err, bird_data) {
 		if (!err) {
-
-
+			return res.status(200).send(bird_data);
 		} else {
 			return res.status(404).send('Bird Not Found');
 		}
@@ -84,7 +83,7 @@ exports.postBird = (req, res, next) => {
  * DELETE /birds/:id
  */
  exports.deleteBird = (req, res, next) =>{
- 	Bird.remove({ _id: req.user.id }, (err) => {
+ 	Bird.findByIdAndRemove({ _id: req.user.id }, (err) => {
     if (err) { return next(err); }
 
   });
