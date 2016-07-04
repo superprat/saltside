@@ -95,7 +95,7 @@ var crow = {
     it('should return a 404 status code when fetch a bird that was already deleted', function(done){
 
       request(url)
-      .delete('/birds/'+crow.id)
+      .get('/birds/'+crow.id)
       .send()
       .expect(404)
       .end(function(err, res){
