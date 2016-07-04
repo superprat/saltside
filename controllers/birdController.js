@@ -6,6 +6,15 @@ const Bird = require('../models/Bird');
 exports.getBirds = (req, res) => {
 
 	//Only visible birds should be returned
+	Bird.find({ visible: true }, function(err, birdies) {
+	  if (err) {
+	  	return res.status(500).send();
+	  	throw err;
+	  }
+
+	  // object of the user
+	  return res.status(200).send(birdies);
+	});
 
 };
 
@@ -14,6 +23,15 @@ exports.getBirds = (req, res) => {
  * GET /birds/:id
  */
 exports.getBird = (req, res) => {
+
+	Bird.findById(req.params.id, function (err, bird_data) {
+		if (!err) {
+
+
+		} else {
+			return res.status(404).send('Bird Not Found');
+		}
+	});
 
 
 };
@@ -51,7 +69,7 @@ exports.postBird = (req, res, next) => {
 		newBird.set('visible',visible);
 
 	newBird.save((err) => {
-      if (err) { return next(err); }
+      if (err) { return res.status(400).send(err); }
 
       return res.status(201).send('Created');
 
@@ -66,5 +84,8 @@ exports.postBird = (req, res, next) => {
  * DELETE /birds/:id
  */
  exports.deleteBird = (req, res, next) =>{
+ 	Bird.remove({ _id: req.user.id }, (err) => {
+    if (err) { return next(err); }
 
+  });
  }
