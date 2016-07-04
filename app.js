@@ -45,7 +45,25 @@ app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(expressValidator());
+app.use(expressValidator({
+ customValidators: {
+    isArray: function(value) {
+        return Array.isArray(value);
+    },
+    isDate: function(value) {
+    	var regEx = /^\d{4}-\d{2}-\d{2}$/;
+		if(!value.match(regEx))
+			return false;  // Invalid format
+		var d;
+			if(!((d = new Date(value))|0))
+		return false; // Invalid date (or this could be epoch)
+		return d.toISOString().slice(0,10) == value;
+    },
+    isBool: function(value){
+    	return typeof(value) === "boolean"
+    }
+ }
+}));
 
 
 /**

@@ -8,8 +8,8 @@ exports.getBirds = (req, res) => {
 	//Only visible birds should be returned
 	Bird.find({ visible: true }, function(err, birdies) {
 	  if (err) {
-	  	return res.status(500).send();
 	  	console.error(err);
+	  	return res.status(500).send();
 	  }
 
 	  return res.status(200).send(birdies);
@@ -30,7 +30,7 @@ exports.getBird = (req, res) => {
 		if (!err && bird_data != null) {
 			return res.status(200).send(bird_data);
 		} else {
-			return res.status(404).send('Bird Not Found');
+			return res.status(404).send();
 		}
 	});
 
@@ -45,7 +45,9 @@ exports.postBird = (req, res, next) => {
 
 	req.checkBody('name', 'Name not found').notEmpty();
 	req.checkBody('family', 'Family not found').notEmpty();
-	req.checkBody('continents', 'Continents not found').notEmpty();
+	req.checkBody('continents', 'Continents not found').notEmpty().isArray();
+	req.checkBody('added','Date Format is incorrect').optional().isDate();
+	req.checkBody('visible','Visible is incorrect data type').optional().isBool();
 
 	var errors = req.validationErrors();
 
@@ -63,11 +65,14 @@ exports.postBird = (req, res, next) => {
 		continents:req.body.continents
 	});
 
+	console.log(added);
+
 	if(added)
 		newBird.set('added',new Date(added));
 
 	if(typeof(visible) != "undefined")
 		newBird.set('visible',visible);
+
 
 	newBird.save((err) => {
 		if (err)
@@ -76,7 +81,7 @@ exports.postBird = (req, res, next) => {
 			return res.status(500).send();
 		}
 
-      return res.status(201).send('Created');
+      return res.status(201).send(newBird);
 
     });
 
@@ -89,7 +94,7 @@ exports.postBird = (req, res, next) => {
  exports.deleteBird = (req, res, next) =>{
 
  	if(!mongoose.Types.ObjectId.isValid(req.params.id))
- 		return res.status(404).send('Bird not Found');
+ 		return res.status(404).send();
 
  	// get a user with ID of 1
 	Bird.findById(req.params.id, function(err, bird) {
@@ -99,7 +104,7 @@ exports.postBird = (req, res, next) => {
 	  }
 
 	  if(bird == null)
-	  	return res.status(404).send('Bird not Found');
+	  	return res.status(404).send();
 
 	  // save the user
 	  bird.remove(function(err) {
@@ -115,3 +120,5 @@ exports.postBird = (req, res, next) => {
 
 
  }
+
+
