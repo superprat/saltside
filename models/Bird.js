@@ -11,6 +11,7 @@ const birdSchema = new mongoose.Schema({
 birdSchema.set('toJSON', {
      transform: function (doc, ret, options) {
          ret.id = ret._id;
+         ret.added = ret.added.toISOString().split('T')[0];
          delete ret._id;
          delete ret.__v;
      }
