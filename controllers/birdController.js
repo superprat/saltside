@@ -1,5 +1,5 @@
 const Bird = require('../models/Bird');
-
+const mongoose = require('mongoose');
 /**
  * GET /birds
  */
@@ -24,8 +24,12 @@ exports.getBirds = (req, res) => {
  */
 exports.getBird = (req, res) => {
 
+	if(!mongoose.Types.ObjectId.isValid(req.params.id))
+ 		return res.status(404).send('Bird not Found');
+
 	Bird.findById(req.params.id, function (err, bird_data) {
-		if (!err) {
+		if (!err && bird_data != null) {
+
 			return res.status(200).send(bird_data);
 		} else {
 			return res.status(404).send('Bird Not Found');
@@ -68,7 +72,11 @@ exports.postBird = (req, res, next) => {
 		newBird.set('visible',visible);
 
 	newBird.save((err) => {
-      if (err) { return res.status(400).send(err); }
+      if (err)
+      	{
+      		console.error(err);
+      		return res.status(500).send();
+      	}
 
       return res.status(201).send('Created');
 
@@ -83,8 +91,31 @@ exports.postBird = (req, res, next) => {
  * DELETE /birds/:id
  */
  exports.deleteBird = (req, res, next) =>{
- 	Bird.findByIdAndRemove({ _id: req.user.id }, (err) => {
-    if (err) { return next(err); }
 
-  });
+ 	if(!mongoose.Types.ObjectId.isValid(req.params.id))
+ 		return res.status(404).send('Bird not Found');
+
+ 	// get a user with ID of 1
+	Bird.findById(req.params.id, function(err, bird) {
+	  if (err) {
+	  	console.error(err);
+	  	return res.status(500).send();
+	  }
+
+	  if(bird == null)
+	  	return res.status(404).send('Bird not Found');
+
+	  // save the user
+	  bird.remove(function(err) {
+	    if (err) {
+		  	console.error(err);
+		  	return res.status(500).send();
+	  	}
+
+	    return res.status(200).send();
+	  });
+
+	});
+
+
  }
