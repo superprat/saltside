@@ -9,10 +9,9 @@ exports.getBirds = (req, res) => {
 	Bird.find({ visible: true }, function(err, birdies) {
 	  if (err) {
 	  	return res.status(500).send();
-	  	throw err;
+	  	console.error(err);
 	  }
 
-	  // object of the user
 	  return res.status(200).send(birdies);
 	});
 
@@ -29,7 +28,6 @@ exports.getBird = (req, res) => {
 
 	Bird.findById(req.params.id, function (err, bird_data) {
 		if (!err && bird_data != null) {
-
 			return res.status(200).send(bird_data);
 		} else {
 			return res.status(404).send('Bird Not Found');
@@ -72,17 +70,15 @@ exports.postBird = (req, res, next) => {
 		newBird.set('visible',visible);
 
 	newBird.save((err) => {
-      if (err)
-      	{
-      		console.error(err);
-      		return res.status(500).send();
-      	}
+		if (err)
+		{
+			console.error(err);
+			return res.status(500).send();
+		}
 
       return res.status(201).send('Created');
 
     });
-
-
 
 };
 
