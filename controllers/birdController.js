@@ -65,8 +65,6 @@ exports.postBird = (req, res, next) => {
 		continents:req.body.continents
 	});
 
-	console.log(added);
-
 	if(added)
 		newBird.set('added',new Date(added));
 
@@ -96,7 +94,6 @@ exports.postBird = (req, res, next) => {
  	if(!mongoose.Types.ObjectId.isValid(req.params.id))
  		return res.status(404).send();
 
- 	// get a user with ID of 1
 	Bird.findById(req.params.id, function(err, bird) {
 	  if (err) {
 	  	console.error(err);
@@ -106,7 +103,6 @@ exports.postBird = (req, res, next) => {
 	  if(bird == null)
 	  	return res.status(404).send();
 
-	  // save the user
 	  bird.remove(function(err) {
 	    if (err) {
 		  	console.error(err);
